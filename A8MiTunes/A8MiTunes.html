@@ -146,7 +146,7 @@
 
 				} else {
 
-					document.getElementById('albums').innerHTML = '<select size="16" id="albumSel" name="albumSelect" style="font-size:24px; width:100%;"><option i="-1"></option></select>';
+					document.getElementById('albums').innerHTML = '<select size="16" id="albumSel" name="albumSelect" style="font-size:24px; width:100%;"><option></option></select>';
 				}
 			}
 
@@ -179,11 +179,9 @@
 			}
 
 			function f() {
-				if (document.miTunes.albumSelect.length > 0) {
-					if (document.getElementById('trackSel').innerHTML !== '<option></option>') {
-						document.miTunes.albumSelect.selectedIndex = 0;
-						showTracks();
-					}
+				if (document.getElementById('albumSel').innerHTML !== '<option></option>') {
+					document.miTunes.albumSelect.selectedIndex = 0;
+					showTracks();
 				} else {
 					document.getElementById('tracks').innerHTML = '<select size="16" id="trackSel" name="trackSelect" style="font-size:24px; width:100%"><option></option></select>';
 				}
@@ -252,14 +250,14 @@
 					<tr><td colspan="3" style="padding:4px; text-align:center; border-top: 4px groove black;">
 						<!--should I use focusin?-->
 						<input type="text" id="search" value="search..." onfocusin="editSearch();" onfocusout="editSearch();" onchange="showAlbums(); f();" style="font-size:40px; color:grey; width:66%;" />
-						<input type="button" value="<-" class="button" onclick="var output=document.getElementById('search').value; output=output.substring(0,output.length-1); document.getElementById('search').value=output; editSearch(); showAlbums(); f();" />
+						<input type="button" value="<-" class="button" onclick="var output=document.getElementById('search').value; if (output!=='search...') {output=output.substring(0,output.length-1); document.getElementById('search').value=output; editSearch(); showAlbums(); f();}" />
 						<input type="button" value="reset" class="reset-button" onclick="document.getElementById('search').value='search...'; editStyle(); showAlbums(); f();" />
 					</td></tr>
 					<!--could do a loop for each row-->
 					<tr id="row1"><td colspan="3"></td></tr>
 					<tr id="row2"><td colspan="3"></td></tr>
 					<tr id="row3"><td colspan="3"></td></tr>
-					<tr><td colspan="3" style="padding:4px; text-align:center;"><input type="button" value="______" style="font-size:40px; width:60%;" onclick="addChar(' '); showAlbums(); if (document.miTunes.albumSelect.length>0) {document.miTunes.albumSelect.selectedIndex = 0; showTracks();} else {document.getElementById(\'tracks\').innerHTML = \'<select size=&quot;16&quot; style=&quot;font-size:24px; width:100%;&quot;><option></option></select>\';}" /></td></tr>
+					<tr><td colspan="3" style="padding:4px; text-align:center;"><input type="button" value="______" style="font-size:40px; width:60%;" onclick="addChar(' '); showAlbums(); f();" /></td></tr>
 				</table>
 			</form>
 		</div>
