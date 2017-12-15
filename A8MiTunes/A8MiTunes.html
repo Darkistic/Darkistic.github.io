@@ -308,7 +308,7 @@
 					</td>
 				</tr>
 				<tr><td colspan="3" class="inputs">
-					<input type="text" id="search" value="search..." class="search" style="color: gray;" disabled onchange="showAlbums(); f();" />
+					<input type="text" id="search" class="search" style="color: gray;" value="search..." onfocusin="editSearch();" onfocusout="editSearch();" onchange="showAlbums(); f();" />
 					<input type="button" value="<-" class="button" onclick="backspace();" />
 					<input type="button" value="reset" class="reset-button" onclick="resetSearch();" />
 				</td></tr>
