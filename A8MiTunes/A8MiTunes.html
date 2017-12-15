@@ -7,26 +7,9 @@
 		<script src="music.js"></script>
 		<script>
 
-			function editStyle() {
-
-				if (document.getElementById('search').value == 'search...') {
-					document.getElementById('search').style = 'font-size:40px; color:grey; width:66%;';
-				}
-				else {
-					document.getElementById('search').style = 'font-size:40px; color:black; width:66%;';
-				}
-			}
-
 			function editSearch() {
-
-				var input = document.getElementById('search').value;
-				var output = input;
-
-				if (input == 'search...') {output = ''};
-				if (input == '') {output = 'search...'};
-
-				document.getElementById('search').value = output;
-				editStyle();
+				document.getElementById('search').style = 'font-size:40px; color:black; width:66%;';
+				if (document.getElementById('search').value == 'search...') {document.getElementById('search').value = ''};
 			}
 
 			function addChar(x) {
@@ -38,7 +21,6 @@
 
 				output += x.toLowerCase();
 				document.getElementById('search').value = output;
-				editStyle();
 			}
 
 			function showMedia() {
@@ -249,9 +231,9 @@
 					</tr>
 					<tr><td colspan="3" style="padding:4px; text-align:center; border-top: 4px groove black;">
 						<!--should I use focusin?-->
-						<input type="text" id="search" value="search..." onfocusin="editSearch();" onfocusout="editSearch();" onchange="showAlbums(); f();" style="font-size:40px; color:grey; width:66%;" />
+						<input type="text" id="search" value="search..." disabled onchange="showAlbums(); f();" style="font-size:40px; color:grey; width:66%;" />
 						<input type="button" value="<-" class="button" onclick="var output=document.getElementById('search').value; if (output!=='search...') {output=output.substring(0,output.length-1); document.getElementById('search').value=output; editSearch(); showAlbums(); f();}" />
-						<input type="button" value="reset" class="reset-button" onclick="document.getElementById('search').value='search...'; editStyle(); showAlbums(); f();" />
+						<input type="button" value="reset" class="reset-button" onclick="document.getElementById('search').value='search...'; showAlbums(); f();" />
 					</td></tr>
 					<!--could do a loop for each row-->
 					<tr id="row1"><td colspan="3"></td></tr>
