@@ -114,11 +114,11 @@
 			function f() {
 				//refreshes the track list or clears the track list and selected track when a change is made to the search term
 
-				if (document.getElementById('albumSel').innerHTML !== '<option></option>') {
+				if (document.getElementById('albumSel').innerHTML !== '<option> </option>') {
 					document.miTunes.albumSelect.selectedIndex = 0;
 					showTracks();
 				} else {
-					document.getElementById('tracks').innerHTML = '<select size="16" id="trackSel" name="trackSelect"><option></option></select>';
+					document.getElementById('tracks').innerHTML = '<select size="16" id="trackSel" name="trackSelect"><option> </option></select>';
 					document.getElementById('art').innerHTML = '';
 					document.getElementById('player').innerHTML = '';
 					document.getElementById('lyrics').innerHTML = '';
@@ -164,7 +164,7 @@
 					document.getElementById('albums').innerHTML = html;
 
 				} else {
-					document.getElementById('albums').innerHTML = '<select size="16" id="albumSel" name="albumSelect"><option></option></select>';
+					document.getElementById('albums').innerHTML = '<select size="16" id="albumSel" name="albumSelect"><option> </option></select>';
 				}
 			}
 
@@ -299,8 +299,8 @@
 		<form name="miTunes">
 			<table class="miTunes">
 				<tr>
-					<td id="albums" class="top"><select size="16" id="albumSel" name="albumSelect"><option></option></select></td>
-					<td id="tracks" class="top"><select size="16" id="trackSel" name="trackSelect"><option></option></select></td>
+					<td id="albums" class="top"><select size="16" id="albumSel" name="albumSelect"><option> </option></select></td>
+					<td id="tracks" class="top"><select size="16" id="trackSel" name="trackSelect"><option> </option></select></td>
 					<td class="top">
 						<span id="art"></span>
 						<span id="player"></span>
