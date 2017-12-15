@@ -87,25 +87,25 @@
 				var search = document.getElementById('search').value;
 				var html = '<select size="16" id="trackSel" name="trackSelect" onchange="showMedia();">';
 
-					for (i=0; i<albumLength; i++) {
+				for (i=0; i<albumLength; i++) {
 
-						var t = albums[album].tracks[i].title.toLowerCase();
-						var l = albums[album].tracks[i].lyrics.toLowerCase();
+					var t = albums[album].tracks[i].title.toLowerCase();
+					var l = albums[album].tracks[i].lyrics.toLowerCase();
 
-						if (t.indexOf(search) !== -1 || l.indexOf(search) !== -1 || search.length < 2 || search == 'search...') {
+					if (t.indexOf(search) !== -1 || l.indexOf(search) !== -1 || search.length < 2 || search == 'search...') {
 
-							html +=
-								'<option id="track'
-								+x
-								+'" i="'
-								+i
-								+'">'
-								+albums[album].tracks[i].title
-								+'</option>';
+						html +=
+							'<option id="track'
+							+x
+							+'" i="'
+							+i
+							+'">'
+							+albums[album].tracks[i].title
+							+'</option>';
 
-							x++;
-						}
+						x++;
 					}
+				}
 
 				html += '</select>';
 				document.getElementById('tracks').innerHTML = html;
@@ -211,7 +211,7 @@
 				f();
 			}
 
-			function resetSearch() {
+			function clearSearch() {
 				//resets the search text to grey "search..."
 
 				document.getElementById('search').value = 'search...';
@@ -308,9 +308,9 @@
 					</td>
 				</tr>
 				<tr><td colspan="3" class="inputs">
-					<input type="text" id="search" class="search" style="color: gray;" value="search..." onfocusin="editSearch();" onfocusout="editSearch();" onchange="showAlbums(); f();" />
+					<input type="text" id="search" value="search..." class="search" style="color: gray;" disabled />
 					<input type="button" value="<-" class="button" onclick="backspace();" />
-					<input type="button" value="reset" class="reset-button" onclick="resetSearch();" />
+					<input type="button" value="clear" class="reset-button" onclick="clearSearch();" />
 				</td></tr>
 				<tr id="row0"><td colspan="3"></td></tr>
 				<tr id="row1"><td colspan="3"></td></tr>
