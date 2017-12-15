@@ -10,10 +10,10 @@
 			function editStyle() {
 
 				if (document.getElementById('search').value == 'search...') {
-					document.getElementById('search').style = 'font-size:40px; color:grey; width:66%;';
+					document.getElementById('search').style = 'color:gray;';
 				}
 				else {
-					document.getElementById('search').style = 'font-size:40px; color:black; width:66%;';
+					document.getElementById('search').style = 'color:black;';
 				}
 			}
 
@@ -74,9 +74,9 @@
 					+albums[a].tracks[t].lyrics
 					+'</textarea>'
 
-				document.getElementById("art").innerHTML = art;
-				document.getElementById("player").innerHTML = song;
-				document.getElementById("lyrics").innerHTML = lyric;
+				document.getElementById('art').innerHTML = art;
+				document.getElementById('player').innerHTML = song;
+				document.getElementById('lyrics').innerHTML = lyric;
 			}
 
 			function showTracks() {
@@ -85,14 +85,14 @@
 				var album = document.getElementById('album' + document.miTunes.albumSelect.selectedIndex).getAttribute('i');
 				var albumLength = albums[album].tracks.length;
 				var search = document.getElementById('search').value;
-				var html = '<select size="16" id="trackSel" name="trackSelect" onchange="showMedia()" style="font-size:24px; width:100%;">';
+				var html = '<select size="16" id="trackSel" name="trackSelect" class="selects" onchange="showMedia()">';
 
 					for (i=0; i<albumLength; i++) {
 
-						//###################################################
-						//alert('album: ' + album + albums[album].title + '\ntrack: ' + i + albums[album].tracks[i].title + '\nindex in title: ' + albums[album].tracks[i].title.indexOf(search) + '\nindex in lyrics: ' + albums[album].tracks[i].lyrics.indexOf(search) + '\nsearch length: ' + search.length + '\nsearch: ' + search)
+						var t = albums[album].tracks[i].title.toLowerCase();
+						var l = albums[album].tracks[i].lyrics.toLowerCase();
 
-						if (albums[album].tracks[i].title.indexOf(search) !== -1 || albums[album].tracks[i].lyrics.indexOf(search) !== -1 || search.length < 2 || search == 'search...') {
+						if (t.indexOf(search) !== -1 || l.indexOf(search) !== -1 || search.length < 2 || search == 'search...') {
 
 							html +=
 								'<option id="track'
@@ -111,17 +111,33 @@
 				document.getElementById('tracks').innerHTML = html;
 			}
 
+			function f() {
+
+				if (document.getElementById('albumSel').innerHTML !== '<option></option>') {
+					document.miTunes.albumSelect.selectedIndex = 0;
+					showTracks();
+				} else {
+					document.getElementById('tracks').innerHTML = '<select size="16" id="trackSel" name="trackSelect" class="selects"><option></option></select>';
+					document.getElementById('art').innerHTML = '';
+					document.getElementById('player').innerHTML = '';
+					document.getElementById('lyrics').innerHTML = '';
+				}
+			}
+
 			function showAlbums() {
 
 				var x = 0;
 				var search = document.getElementById('search').value;
-				var html = '<select size="16" id="albumSel" name="albumSelect" onchange="showTracks()" style="font-size:24px; width:100%;">';
+				var html = '<select size="16" id="albumSel" name="albumSelect" class="selects" onchange="showTracks()">';
 
 				for (i=0; i<albums.length; i++) {
 
 					for (j=0; j<albums[i].tracks.length; j++) {
 
-						if (albums[i].tracks[j].title.indexOf(search) !== -1 || albums[i].tracks[j].lyrics.indexOf(search) !== -1 || search.length < 2 || search == 'search...') {
+						var t = albums[i].tracks[j].title.toLowerCase();
+						var l = albums[i].tracks[j].lyrics.toLowerCase();
+
+						if (t.indexOf(search) !== -1 || l.indexOf(search) !== -1 || search.length < 2 || search == 'search...') {
 
 							html +=
 								'<option id="album'
@@ -146,7 +162,7 @@
 
 				} else {
 
-					document.getElementById('albums').innerHTML = '<select size="16" id="albumSel" name="albumSelect" style="font-size:24px; width:100%;"><option></option></select>';
+					document.getElementById('albums').innerHTML = '<select size="16" id="albumSel" name="albumSelect" class="selects"><option></option></select>';
 				}
 			}
 
@@ -178,30 +194,60 @@
 				}
 			}
 
-			function f() {
-				if (document.getElementById('albumSel').innerHTML !== '<option></option>') {
-					document.miTunes.albumSelect.selectedIndex = 0;
-					showTracks();
-				} else {
-					document.getElementById('tracks').innerHTML = '<select size="16" id="trackSel" name="trackSelect" style="font-size:24px; width:100%"><option></option></select>';
+			function backspace() {
+
+				var output = document.getElementById('search').value;
+
+				if (output !== 'search...') {
+
+					output = output.substring(0,output.length-1);
+					document.getElementById('search').value = output;
+					editSearch();
 				}
+
+				showAlbums();
+				f();
+			}
+
+			function resetSearch() {
+
+				document.getElementById('search').value = 'search...';
+				document.getElementById('search').style = 'color:gray;';
+
+				showAlbums();
+				f();
 			}
 
 		</script>
 
 		<style>
 
+			h1 {
+				width: 200px;
+				margin: 10px;
+			}
+
+			.credits {
+				position: absolute;
+				left: 170px;
+				top: 8px;
+				min-width: 229px;
+			}
 			.miTunes {
 				max-width: 920px;
 				min-width: 725px;
+				width: 100%;
 				border: 4px groove black;
 				background-color: #77DDDD;
+			}
+			.selects {
 				width: 100%;
+				font-size: 24px;
 			}
 			.top {
 				vertical-align: top;
-				padding-bottom: 4px;
 				width: 28%;
+				padding-bottom: 4px;
 			}
 			.art {
 				display: block;
@@ -214,53 +260,64 @@
 				resize: vertical;
 				width: 97.5%;
 			}
+			.inputs {
+				text-align: center;
+				border-top: 4px groove black;
+				padding: 4px;
+			}
+			.search {
+				width: 66%;
+				font-size: 40px;
+			}
 			.keyboard {
 				text-align: center;
 				width: 100%;
 			}
 			.button {
 				text-align: center;
-				font-size: 40px;
 				width: 70px;
+				font-size: 40px;
 			}
 			.reset-button {
 				text-align: center;
-				font-size: 40px;
 				width: 140px;
+				font-size: 40px;
+			}
+			.space {
+				width: 60%;
+				font-size: 40px;
 			}
 
 		</style>
 	</head>
 
 	<body>
-		<h1 style="margin:10px; width:200px;">MiTunes</h1>
-		<p style="position:absolute; left:170px; top:8px; min-width:229px;">Louis Meredith - cvljm2 - B623038</p>
+		<h1>MiTunes</h1>
+		<p class="credits">Louis Meredith - cvljm2 - B623038</p>
 		<div>
 			<form name="miTunes">
 				<table class="miTunes">
 					<tr>
-						<td id="albums" class="top"><select size="16" id="albumSel" name="albumSelect" style="font-size:24px; width:100%;"><option></option></select></td>
-						<td id="tracks" class="top"><select size="16" id="trackSel" name="trackSelect" style="font-size:24px; width:100%;"><option></option></select></td>
+						<td id="albums" class="top"><select size="16" id="albumSel" name="albumSelect" class="selects"><option></option></select></td>
+						<td id="tracks" class="top"><select size="16" id="trackSel" name="trackSelect" class="selects"><option></option></select></td>
 						<td class="top">
 							<span id="art"></span>
 							<span id="player"></span>
 							<span id="lyrics"></span>
 						</td>
 					</tr>
-					<tr><td colspan="3" style="padding:4px; text-align:center; border-top: 4px groove black;">
-						<!--should I use focusin?-->
-						<input type="text" id="search" value="search..." onfocusin="editSearch();" onfocusout="editSearch();" onchange="showAlbums(); f();" style="font-size:40px; color:grey; width:66%;" />
-						<input type="button" value="<-" class="button" onclick="var output=document.getElementById('search').value; if (output!=='search...') {output=output.substring(0,output.length-1); document.getElementById('search').value=output; editSearch(); showAlbums(); f();}" />
-						<input type="button" value="reset" class="reset-button" onclick="document.getElementById('search').value='search...'; editStyle(); showAlbums(); f();" />
+					<tr><td colspan="3" class="inputs">
+						<input type="text" id="search" class="search" style="color:gray;" value="search..." onfocusin="editSearch();" onfocusout="editSearch();" onchange="showAlbums(); f();" />
+						<input type="button" value="<-" class="button" onclick="backspace();" />
+						<input type="button" value="reset" class="reset-button" onclick="resetSearch();" />
 					</td></tr>
-					<!--could do a loop for each row-->
 					<tr id="row1"><td colspan="3"></td></tr>
 					<tr id="row2"><td colspan="3"></td></tr>
 					<tr id="row3"><td colspan="3"></td></tr>
-					<tr><td colspan="3" style="padding:4px; text-align:center;"><input type="button" value="______" style="font-size:40px; width:60%;" onclick="addChar(' '); showAlbums(); f();" /></td></tr>
+					<tr><td colspan="3" style="padding:4px; text-align:center;"><input type="button" class="space" value="______" onclick="addChar(' '); showAlbums(); f();" /></td></tr>
 				</table>
 			</form>
 		</div>
-		<script>showAlbums(); initKeyboard();</script>
+		<script>showAlbums(); initKeyboard(); f();</script>
 	</body>
 </html>
